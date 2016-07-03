@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/html/portlet/login/init.jsp"%>
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
@@ -52,14 +52,20 @@
 		}
 		%>
 
-		<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL">
+		<portlet:actionURL
+			secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>"
+			var="loginURL">
 			<portlet:param name="struts_action" value="/login/login" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="fm" onSubmit="event.preventDefault();">
+		<aui:form action="<%= loginURL %>"
+			autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>'
+			cssClass="sign-in-form" method="post" name="fm"
+			onSubmit="event.preventDefault();">
 			<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="doActionAfterLogin" type="hidden" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? true : false %>" />
+			<aui:input name="doActionAfterLogin" type="hidden"
+				value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? true : false %>" />
 
 			<c:choose>
 				<c:when test='<%= SessionMessages.contains(request, "userAdded") %>'>
@@ -71,7 +77,8 @@
 
 					<div class="alert alert-success">
 						<c:choose>
-							<c:when test="<%= company.isStrangersVerify() || Validator.isNull(userPassword) %>">
+							<c:when
+								test="<%= company.isStrangersVerify() || Validator.isNull(userPassword) %>">
 								<%= LanguageUtil.get(pageContext, "thank-you-for-creating-an-account") %>
 
 								<c:if test="<%= company.isStrangersVerify() %>">
@@ -83,12 +90,14 @@
 							</c:otherwise>
 						</c:choose>
 
-						<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
+						<c:if
+							test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
 							<%= LanguageUtil.format(pageContext, "your-password-has-been-sent-to-x", userEmailAddress) %>
 						</c:if>
 					</div>
 				</c:when>
-				<c:when test='<%= SessionMessages.contains(request, "userPending") %>'>
+				<c:when
+					test='<%= SessionMessages.contains(request, "userPending") %>'>
 
 					<%
 					String userEmailAddress = (String)SessionMessages.get(request, "userPending");
@@ -100,15 +109,25 @@
 				</c:when>
 			</c:choose>
 
-			<liferay-ui:error exception="<%= AuthException.class %>" message="authentication-failed" />
-			<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-login-because-the-maximum-number-of-users-has-been-reached" />
-			<liferay-ui:error exception="<%= CookieNotSupportedException.class %>" message="authentication-failed-please-enable-browser-cookies" />
-			<liferay-ui:error exception="<%= NoSuchUserException.class %>" message="authentication-failed" />
-			<liferay-ui:error exception="<%= PasswordExpiredException.class %>" message="your-password-has-expired" />
-			<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="authentication-failed" />
-			<liferay-ui:error exception="<%= UserLockoutException.class %>" message="this-account-has-been-locked" />
-			<liferay-ui:error exception="<%= UserPasswordException.class %>" message="authentication-failed" />
-			<liferay-ui:error exception="<%= UserScreenNameException.class %>" message="authentication-failed" />
+			<liferay-ui:error exception="<%= AuthException.class %>"
+				message="authentication-failed" />
+			<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>"
+				message="unable-to-login-because-the-maximum-number-of-users-has-been-reached" />
+			<liferay-ui:error
+				exception="<%= CookieNotSupportedException.class %>"
+				message="authentication-failed-please-enable-browser-cookies" />
+			<liferay-ui:error exception="<%= NoSuchUserException.class %>"
+				message="authentication-failed" />
+			<liferay-ui:error exception="<%= PasswordExpiredException.class %>"
+				message="your-password-has-expired" />
+			<liferay-ui:error exception="<%= UserEmailAddressException.class %>"
+				message="authentication-failed" />
+			<liferay-ui:error exception="<%= UserLockoutException.class %>"
+				message="this-account-has-been-locked" />
+			<liferay-ui:error exception="<%= UserPasswordException.class %>"
+				message="authentication-failed" />
+			<liferay-ui:error exception="<%= UserScreenNameException.class %>"
+				message="authentication-failed" />
 
 			<aui:fieldset>
 
@@ -126,18 +145,26 @@
 				}
 				%>
 
-				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>" cssClass="clearable" label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="<%= login %>">
+				<aui:input
+					autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>"
+					cssClass="clearable" label="<%= loginLabel %>" name="login"
+					showRequiredLabel="<%= false %>" type="text" value="<%= login %>">
 					<aui:validator name="required" />
 				</aui:input>
 
-				<aui:input name="password" showRequiredLabel="<%= false %>" type="password" value="<%= password %>">
+				<aui:input name="password" showRequiredLabel="<%= false %>"
+					type="password" value="<%= password %>">
 					<aui:validator name="required" />
 				</aui:input>
 
-				<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
+				<span id="<portlet:namespace />passwordCapsLockSpan"
+					style="display: none;"><liferay-ui:message
+						key="caps-lock-is-on" /></span>
 
-				<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
-					<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" />
+				<c:if
+					test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
+					<aui:input checked="<%= rememberMe %>" name="rememberMe"
+						type="checkbox" />
 				</c:if>
 			</aui:fieldset>
 
@@ -146,7 +173,7 @@
 			</aui:button-row>
 		</aui:form>
 
-	<%-- <liferay-util:include page="/html/portlet/login/navigation.jsp" /> --%>
+		<%-- <liferay-util:include page="/html/portlet/login/navigation.jsp" /> --%>
 
 		<aui:script use="aui-base">
 			var form = A.one(document.<portlet:namespace />fm);
