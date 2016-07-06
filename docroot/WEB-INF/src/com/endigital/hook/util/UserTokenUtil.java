@@ -14,17 +14,12 @@ public class UserTokenUtil {
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("MD5");
-			//String test="admin1465354350AjAPOJSOJQadpojOAJojposjpoJ09W20KNOWQJIO21N2";
 			md.update((username+strTimestamp+key).getBytes());
-			//md.update(test.getBytes());
 			BigInteger hash = new BigInteger(1,md.digest());
 			String hd = hash.toString(16);
 			while(hd.length()<32){
 				hd="0"+hd;
 			}
-			//System.out.println(hd);
-			//System.out.println((username+strTimestamp+key).getBytes());
-			//System.out.println(md.digest());
 			return base64encode(username+'&'+strTimestamp+'&'+hd);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();

@@ -42,6 +42,7 @@ public class ExampleStrutsPortletAction extends BaseStrutsPortletAction {
 			String token = UserTokenUtil.getToken(login);
 			System.out.println(token);
 			PortalUtil.getHttpServletResponse(actionResponse).sendRedirect("http://"+url+"/?"+token);
+			url = null;
 		}
 		//如果为空的话，那么就按照正常的登录过程进行
 		else{
@@ -54,7 +55,6 @@ public class ExampleStrutsPortletAction extends BaseStrutsPortletAction {
 	public String render(StrutsPortletAction originalStrutsPortletAction,
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse) throws Exception {
-		// TODO Auto-generated method stub
 		
 		ThemeDisplay td = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		System.out.println("URLCurrent:"+td.getURLCurrent());
